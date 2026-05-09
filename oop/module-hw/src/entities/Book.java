@@ -57,4 +57,9 @@ public class Book extends Publication {
     result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "Book(title='" + getTitle() + "', author='" + getAuthor() + "', year=" + getYear() + ", isbn='" + isbn + "')";
+  }
 }

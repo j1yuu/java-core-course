@@ -63,10 +63,6 @@ public abstract class Publication implements Printable {
     return publicationsCount;
   }
 
-  public static void decreasePublicationsCount() {
-    publicationsCount--;
-  }
-
   @Override
   public String toString() {
     return "Publication(title='" + title + "', author='" + author + "', year=" + year + ")";

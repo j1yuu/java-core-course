@@ -32,9 +32,9 @@ public class App {
     while (true) { 
       System.out.println("\nChoose an option from the list below (0-6):");
       System.out.println("1. Add a publication");
-      System.out.println("2. Get all of the publications");
+      System.out.println("2. List publications");
       System.out.println("3. Search for a publication");
-      System.out.println("4. Print number of the publications");
+      System.out.println("4. Print number of the publications created");
       System.out.println("5. Delete publication");
       System.out.println("6. Clear the library");
       System.out.println("0. Exit\n");
@@ -89,7 +89,12 @@ public class App {
       }
       case PublicationType.MAGAZINE -> {
         System.out.print("Issue Number: ");
-        String issueNumber = scanner.nextLine();
+        int issueNumber = getNumberOption();
+
+        if (issueNumber <= 0) {
+          System.out.println("Invalid issue number. Issue number should be greater than 0.");
+          return null;
+        }
         return new Magazine(title, author, year, issueNumber);
       }
       case PublicationType.NEWSPAPER -> {
@@ -125,7 +130,7 @@ public class App {
 
   private static void printGivenPublications(List<Publication> publications) {
     for (Publication pub : publications) {
-      pub.printDetails();
+      pub.toString();
     }
   }
 

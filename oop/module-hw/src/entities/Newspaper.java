@@ -57,4 +57,9 @@ public class Newspaper extends Publication {
     result = prime * result + ((publicationDay == null) ? 0 : publicationDay.hashCode());
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "Newspaper(title='" + getTitle() + "', author='" + getAuthor() + "', year=" + getYear() + ", publicationDay='" + publicationDay + "')";
+  }
 }

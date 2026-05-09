@@ -27,6 +27,11 @@ public class Library {
   }
 
   public void addPublication(Publication pub) {
+    if (pub == null) {
+      System.err.println("Publication can't be null");
+      return;
+    }
+  
     publications.add(pub);
   }
 
@@ -35,9 +40,7 @@ public class Library {
   }
 
   public void removePublication(Publication pub) {
-    boolean removed = publications.remove(pub);
-
-    if (removed) Publication.decreasePublicationsCount();
+    publications.remove(pub);
   }
 
   public List<Publication> searchPublications(Predicate<Publication> condition) {

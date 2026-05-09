@@ -1,18 +1,23 @@
 package entities;
 
 public class Magazine extends Publication {
-  private String issueNumber;
+  private int issueNumber;
 
-  public Magazine(String title, String author, int year, String issueNumber) {
+  public Magazine(String title, String author, int year, int issueNumber) {
     super(title, author, year);
     this.issueNumber = issueNumber;
   }
 
-  public String getIssueNumber() {
+  public int getIssueNumber() {
     return issueNumber;
   }
 
-  public void setIssueNumber(String issueNumber) {
+  public void setIssueNumber(int issueNumber) {
+    if (issueNumber < 0) {
+      System.out.println("Invalid issue number. Issue number should be greater than 0.");
+      return;
+    }
+    
     this.issueNumber = issueNumber;
   }
 
@@ -40,13 +45,10 @@ public class Magazine extends Publication {
       return false;
     }
     Magazine other = (Magazine) obj;
-    if (issueNumber == null) {
-      if (other.issueNumber != null) {
-        return false;
-      }
-    } else if (!issueNumber.equals(other.issueNumber)) {
+    if (issueNumber != other.issueNumber) {
       return false;
     }
+    
     return super.equals(obj);
   }
 
@@ -54,7 +56,12 @@ public class Magazine extends Publication {
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((issueNumber == null) ? 0 : issueNumber.hashCode());
+    result = prime * result + issueNumber;
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "Magazine(title='" + getTitle() + "', author='" + getAuthor() + "', year=" + getYear() + ", issueNumber=" + issueNumber + ")";
   }
 }
