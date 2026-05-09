@@ -16,7 +16,7 @@ public class Library {
 
   public List<Publication> getPublications() {
     if (publications.isEmpty()) {
-      System.out.println("The library is empty");
+      System.out.println("\nThe library is empty");
     }
     return List.copyOf(publications);
   }
@@ -28,7 +28,7 @@ public class Library {
 
   public void addPublication(Publication pub) {
     if (pub == null) {
-      System.err.println("Publication can't be null");
+      System.err.println("\nPublication can't be null");
       return;
     }
   
@@ -45,7 +45,7 @@ public class Library {
 
   public List<Publication> searchPublications(Predicate<Publication> condition) {
     if (condition == null) {
-      System.err.println("Search can't be empty");
+      System.err.println("\nSearch can't be empty");
       return new ArrayList<>();
     }
 

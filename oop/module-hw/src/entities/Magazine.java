@@ -14,10 +14,10 @@ public class Magazine extends Publication {
 
   public void setIssueNumber(int issueNumber) {
     if (issueNumber < 0) {
-      System.out.println("Invalid issue number. Issue number should be greater than 0.");
+      System.out.println("\nInvalid issue number. Issue number should be greater than 0.");
       return;
     }
-    
+
     this.issueNumber = issueNumber;
   }
 

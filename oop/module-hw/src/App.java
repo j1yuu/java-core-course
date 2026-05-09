@@ -130,7 +130,7 @@ public class App {
 
   private static void printGivenPublications(List<Publication> publications) {
     for (Publication pub : publications) {
-      pub.toString();
+      System.out.println(pub.toString());
     }
   }
 
@@ -181,7 +181,8 @@ public class App {
     System.out.println("\nChoose a publication from the list below (1-" + publications.size() + "):");
     
     for (int i = 0; i < publications.size(); i++) {
-      System.out.println((i + 1) + ". " + publications.get(i).getTitle());
+      Publication pub = publications.get(i);
+      System.out.println((i + 1) + ". " + pub.getTitle() + " (type: " + pub.getType() + ")");
     }
     System.out.println("0. Back\n");
 
