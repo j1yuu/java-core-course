@@ -6,11 +6,41 @@ public class Book extends Countable {
   private String title;
   private String author;
 
+  private static final int MAX_TITLE_LENGTH = 100;
+  private static final int MIN_TITLE_LENGTH = 1;
+  private static final int MAX_AUTHOR_LENGTH = 100;
+  private static final int MIN_AUTHOR_LENGTH = 1;
+
   public Book(String title, String author, int availableCopies) {
     super(availableCopies);
 
+    validateTitle(title);
+    validateAuthor(author);
+
     this.title = title;
     this.author = author;
+  }
+
+  private boolean validateTitle(String title) {
+    if (title == null || title.length() < MIN_TITLE_LENGTH) {
+      throw new IllegalArgumentException("Title name should be at least 1 symbol long. Current input: " + title);
+    }
+
+    if (title.length() > MAX_TITLE_LENGTH) {
+      throw new IllegalArgumentException("Title name should be less than 100 symbols long. Current input: " + title);
+    }
+    return true;
+  }
+
+  private boolean validateAuthor(String author) {
+    if (author == null || author.length() < MIN_AUTHOR_LENGTH) {
+      throw new IllegalArgumentException("Author name should be at least 1 symbol long. Current input: " + author);
+    }
+
+    if (author.length() > MAX_AUTHOR_LENGTH) {
+      throw new IllegalArgumentException("Author name should be less than 100 symbols long. Current input: " + author);
+    }
+    return true;
   }
 
   public String getTitle() {
@@ -22,17 +52,23 @@ public class Book extends Countable {
   }
 
   public void setTitle(String title) {
-    if (title == null || title.length() < 1) {
-      throw new IllegalArgumentException("Title name should be at least 1 symbol long. Current input: " + title);
-    }
+    validateTitle(title);
+  
     this.title = title;
   }
 
   public void setAuthor(String author) {
-    if (author == null || author.length() < 1) {
-      throw new IllegalArgumentException("Author name should be at least 1 symbol long. Current input: " + author);
-    }
+    validateAuthor(author);
+  
     this.author = author;
+  }
+
+  public void borrowOneCopy() {
+    setAvailableCopies(getAvailableCopies() - 1);
+  }
+
+  public void returnOneCopy() {
+    setAvailableCopies(getAvailableCopies() + 1);
   }
 
   @Override

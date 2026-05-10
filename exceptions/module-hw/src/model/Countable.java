@@ -25,6 +25,8 @@ abstract class Countable {
   private int availableCopies;
 
   public Countable(int availableCopies) {
+    validateAvailableCopies(availableCopies);
+
     this.availableCopies = availableCopies;
   }
 
@@ -32,10 +34,13 @@ abstract class Countable {
     return availableCopies;
   }
 
+  private boolean validateAvailableCopies(int availableCopies) {
+    if (availableCopies < 0) throw new IllegalArgumentException("Available copies should be greater or equal to 0. Current input: " + availableCopies);
+    return true;
+  }
+
   public void setAvailableCopies(int availableCopies) {
-    if (availableCopies < 0) {
-      throw new IllegalArgumentException("Available copies should be greater or equal to 0. Current input: " + availableCopies);
-    }
+    validateAvailableCopies(availableCopies);
 
     this.availableCopies = availableCopies;
   }

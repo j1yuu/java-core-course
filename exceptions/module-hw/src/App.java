@@ -6,17 +6,19 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import model.Book;
-import storage.CatalogManager;
+import services.CatalogService;
+import services.implementation.CatalogServiceImpl;
 
 public class App {
-  private static final CatalogManager catalogManager = new CatalogManager();
+  private static final CatalogService catalogManager = new CatalogServiceImpl();
 
   public static void main(String[] args) throws Exception {
     Scanner scanner = new Scanner(System.in);
 
     List<Book> initialCatalog = new ArrayList<>();
     initCatalog(initialCatalog);
-    catalogManager.setCatalog(List.copyOf(initialCatalog));
+
+    catalogManager.setCatalog(initialCatalog);
 
     System.out.println("Welcome to the Library!");
     while (true) {
@@ -41,7 +43,7 @@ public class App {
       case 2 -> borrowBookCase(scanner);
       case 3 -> returnBookCase(scanner);
       case 4 -> printCatalogCase();
-      case 5 -> exitProgramCase();
+      case 5 -> exitProgramCase(scanner);
       default -> System.out.println("\nInvalid input.");
     }
   }
@@ -57,6 +59,7 @@ public class App {
       menuCase(caseNumber, scanner);
     } catch (InputMismatchException e) {
       System.out.println("\nInput should be a number.");
+      scanner.nextLine();
     }
   }
 
@@ -100,7 +103,9 @@ public class App {
       System.out.println(e.getMessage());
     } catch (InputMismatchException e) {
       System.out.println("\nAvailable copies should be a number.");
+      scanner.nextLine();
     } catch (Exception e) {
+      System.err.println("Unexpected error: " + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -120,6 +125,7 @@ public class App {
     
     } catch (InputMismatchException e) {
       System.err.println("\nIndex should be a number.");
+      scanner.nextLine();
     } catch(IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (EmptyCatalogException e) {
@@ -127,6 +133,7 @@ public class App {
     } catch (NoAvailableCopiesException e) {
       System.err.println("\nThere are no available copies.");
     } catch (Exception e) {
+      System.err.println("Unexpected error: " + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -143,6 +150,9 @@ public class App {
       catalogManager.returnBook(index - 1);
 
       System.out.println("\nSuccessfully returned book.");
+    } catch (InputMismatchException e) {
+      System.out.println("\nIndex should be a number.");
+      scanner.nextLine();
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (NoSuchABookException e) {
@@ -150,11 +160,13 @@ public class App {
     } catch (EmptyCatalogException e) {
       System.err.println("\nCatalog is empty.");
     } catch (Exception e) {
+      System.err.println("Unexpected error: " + e.getMessage());
       e.printStackTrace();
     }
   }
 
-  private static void exitProgramCase() {
+  private static void exitProgramCase(Scanner scanner) {
+    scanner.close();
     System.out.println("\nGoodbye!");
     System.exit(0);
   }

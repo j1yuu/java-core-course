@@ -1,16 +1,17 @@
-package storage;
+package services.implementation;
 
 import exceptions.EmptyCatalogException;
 import exceptions.NoAvailableCopiesException;
 import exceptions.NoSuchABookException;
-import java.util.ArrayList;
 import java.util.List;
 import model.Book;
+import services.CatalogService;
+import storage.Storage;
 
-public 
-class CatalogManager {
-  private final List<Book> catalog = new ArrayList<>();
+public class CatalogServiceImpl implements CatalogService {
+  private final List<Book> catalog = Storage.getCatalog();
 
+  @Override
   public void addBook(Book book) {
     if (book == null) {
       throw new IllegalArgumentException();
@@ -19,6 +20,7 @@ class CatalogManager {
     catalog.add(book);
   }
 
+  @Override
   public void removeBook(Book book) throws NoSuchABookException {
     if (book == null) {
       throw new IllegalArgumentException();
@@ -31,6 +33,8 @@ class CatalogManager {
     catalog.remove(book);
   }
 
+
+  @Override
   public List<Book> getCatalog() throws EmptyCatalogException {
     if (catalog.isEmpty()) {
       throw new EmptyCatalogException();
@@ -38,15 +42,17 @@ class CatalogManager {
     return List.copyOf(catalog);
   }
 
+  @Override
   public void setCatalog(List<Book> catalog) {
     if (catalog == null) {
       throw new IllegalArgumentException();
     }
 
     this.catalog.clear();
-    this.catalog.addAll(catalog);
+    this.catalog.addAll(List.copyOf(catalog));
   }
 
+  @Override
   public Book borrowBook(int index) throws NoAvailableCopiesException, EmptyCatalogException {
     if (catalog == null || catalog.isEmpty()) {
       throw new EmptyCatalogException();
@@ -62,11 +68,12 @@ class CatalogManager {
       throw new NoAvailableCopiesException();
     }
 
-    book.setAvailableCopies(book.getAvailableCopies() - 1);
+    book.borrowOneCopy();
 
     return book;
   }
 
+  @Override
   public void returnBook(int index) throws NoSuchABookException, EmptyCatalogException {
     if (catalog == null || catalog.isEmpty()) {
       throw new EmptyCatalogException();
@@ -80,6 +87,6 @@ class CatalogManager {
       throw new NoSuchABookException();
     }
 
-    catalog.get(index).setAvailableCopies(catalog.get(index).getAvailableCopies() + 1);
+    catalog.get(index).returnOneCopy();
   }
 }
