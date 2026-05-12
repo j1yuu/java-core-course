@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.List;
 import java.util.Optional;
 import model.Contact;
 
@@ -10,13 +11,13 @@ public interface ContactsRepository {
   
   void update(Contact contact);
   
-  Iterable<Contact> findAll();
+  List<Contact> findAll();
 
   Optional<Contact> findByPhone(String phone);
 
-  Iterable<Contact> findByName(String name);
+  List<Contact> findByName(String name);
   
-  Iterable<Contact> findByEmail(String email);
+  List<Contact> findByEmail(String email);
   
-  Iterable<Contact> findByGroup(String group);
+  List<Contact> findByGroup(String group);
 }

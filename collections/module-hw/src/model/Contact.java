@@ -1,9 +1,8 @@
 package model;
 
 import java.util.Objects;
-import java.util.Optional;
 
-public final class Contact {
+public class Contact {
     private String name;
     private String phone;
     private String email;
@@ -18,35 +17,39 @@ public final class Contact {
     private static final int EMAIL_MIN = 2;
     private static final int EMAIL_MAX = 50;
 
-    public Contact(String name, String phone, String email, Optional<String> group) {
-        setName(name);
-        setPhone(phone);
-        setEmail(email);
-
-        this.group = group.orElse("");
+    public Contact(String name, String phone, String email, String group) {
+        validate(name, phone, email);
+        
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.group = group == null ? "" : group;
     }
 
-    public void validate(String name, String phone, String email) {
+    private void validate(String name, String phone, String email) {
         validateName(name);
         validatePhone(phone);
         validateEmail(email);
     }
 
     private void validateName(String name) {
-        if (name == null || name.length() < NAME_MIN || name.length() > NAME_MAX) {
+        if (name == null || name.trim().length() < NAME_MIN || name.trim().length() > NAME_MAX) {
             throw new IllegalArgumentException("Name must be between " + NAME_MIN + " and " + NAME_MAX + " characters");
         }
     }
 
     private void validatePhone(String phone) {
-        if (phone == null || phone.length() < PHONE_MIN || phone.length() > PHONE_MAX) {
+        if (phone == null || phone.trim().length() < PHONE_MIN || phone.trim().length() > PHONE_MAX) {
             throw new IllegalArgumentException("Phone must be between " + PHONE_MIN + " and " + PHONE_MAX + " characters");
         }
     }
 
     private void validateEmail(String email) {
-        if (email == null || email.length() < EMAIL_MIN || email.length() > EMAIL_MAX) {
+        if (email == null || email.trim().length() < EMAIL_MIN || email.trim().length() > EMAIL_MAX) {
             throw new IllegalArgumentException("Email must be between " + EMAIL_MIN + " and " + EMAIL_MAX + " characters");
+        }
+        if (!email.contains("@")) {
+            throw new IllegalArgumentException("Email must contain @");
         }
     }
 
@@ -82,7 +85,7 @@ public final class Contact {
     }
 
     public void setGroup(String group) {
-        this.group = group;
+        this.group = group == null ? "" : group;
     }
 
     @Override

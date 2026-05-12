@@ -1,5 +1,6 @@
 package service.impl;
 
+import exceptions.ContactDoesNotExistException;
 import java.util.Optional;
 import model.Contact;
 import repository.ContactsRepository;
@@ -14,19 +15,22 @@ public class ContactsServiceImpl implements ContactsService {
 
   @Override
   public void save(String name, String phone, String email, String group) {
-    Contact newContact = new Contact(name, phone, email, Optional.ofNullable(group));
+    Contact newContact = new Contact(name, phone, email, group);
     contactsRepository.save(newContact);
   }
 
   @Override
   public void delete(String phone) {
     Optional<Contact> contact = contactsRepository.findByPhone(phone);
-    contact.ifPresent(contactsRepository::delete);
+
+    contact.ifPresentOrElse(contactsRepository::delete, () -> {
+      throw new ContactDoesNotExistException("Contact does not exist");
+    });
   }
 
   @Override
   public void update(String name, String phone, String email, String group) {
-    Contact contact = new Contact(name, phone, email, Optional.ofNullable(group));
+    Contact contact = new Contact(name, phone, email, group);
 
     contactsRepository.update(contact);
   }
