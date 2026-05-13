@@ -1,5 +1,6 @@
 package service.impl;
 
+import exceptions.ContactAlreadyExistException;
 import exceptions.ContactDoesNotExistException;
 import java.util.Optional;
 import model.Contact;
@@ -16,7 +17,11 @@ public class ContactsServiceImpl implements ContactsService {
   @Override
   public void save(String name, String phone, String email, String group) {
     Contact newContact = new Contact(name, phone, email, group);
-    contactsRepository.save(newContact);
+    boolean result = contactsRepository.save(newContact);
+
+    if (!result) {
+      throw new ContactAlreadyExistException("Contact already exists");
+    }
   }
 
   @Override
@@ -32,7 +37,11 @@ public class ContactsServiceImpl implements ContactsService {
   public void update(String name, String phone, String email, String group) {
     Contact contact = new Contact(name, phone, email, group);
 
-    contactsRepository.update(contact);
+    boolean result = contactsRepository.update(contact);
+
+    if (!result) {
+      throw new ContactDoesNotExistException("Contact does not exist");
+    }
   }
 
   @Override

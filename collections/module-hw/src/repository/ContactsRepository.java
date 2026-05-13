@@ -5,11 +5,11 @@ import java.util.Optional;
 import model.Contact;
 
 public interface ContactsRepository {
-  void save(Contact contact);
+  boolean save(Contact contact);
 
-  void delete(Contact contact);
+  boolean delete(Contact contact);
   
-  void update(Contact contact);
+  boolean update(Contact contact);
   
   List<Contact> findAll();
 

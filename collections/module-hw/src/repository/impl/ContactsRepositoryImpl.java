@@ -1,7 +1,5 @@
 package repository.impl;
 
-import exceptions.ContactAlreadyExistException;
-import exceptions.ContactDoesNotExistException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -19,12 +17,13 @@ public class ContactsRepositoryImpl implements ContactsRepository {
   }
 
   @Override
-  public void save(Contact contact) {
+  public boolean save(Contact contact) {
     if (contacts.containsKey(contact.getPhone())) {
-      throw new ContactAlreadyExistException("Contact already exist");
+      return false;
     }
 
     contacts.put(contact.getPhone(), contact);
+    return true;
   }
 
   @Override
@@ -33,21 +32,23 @@ public class ContactsRepositoryImpl implements ContactsRepository {
   }
 
   @Override
-  public void delete(Contact contact) {
+  public boolean delete(Contact contact) {
     if (!contacts.containsKey(contact.getPhone())) {
-      throw new ContactDoesNotExistException("Contact does not exist");
+      return false;
     }
+
     contacts.remove(contact.getPhone());
+    return true;
   }
 
   @Override
-  public void update(Contact contact) {
+  public boolean update(Contact contact) {
     if (contacts.containsKey(contact.getPhone())) {
       contacts.put(contact.getPhone(), contact);
-      return;
+      return true;
     }
 
-    throw new ContactDoesNotExistException("Contact does not exist");
+    return false;
   }
 
   @Override
