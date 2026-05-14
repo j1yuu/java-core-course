@@ -2,6 +2,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
+@FunctionalInterface 
+interface Filter {
+    boolean filter(String mark);
+}
+
+@FunctionalInterface
+interface Collect {
+    void collect(String mark, List<String> filteredMarks);
+}
+
+
 public class App {
     public static void main(String[] args) throws Exception {
         List<String> marks = new ArrayList<>();
@@ -12,8 +23,9 @@ public class App {
         marks.add("D");
         marks.add("E");
 
-        List<String> filteredMarks = new ArrayList<>();
         // Imperative
+
+        List<String> filteredMarks = new ArrayList<>();
         for (String mark : marks) {
             if (mark.hashCode() <= "C".hashCode()) {
                 filteredMarks.add(mark);
@@ -25,9 +37,21 @@ public class App {
         }
 
         // Declarative
-        List<String> streamFilteredMarks = marks.stream()
-            .filter(mark -> mark.hashCode() <= "C".hashCode())
-            .toList();
-        streamFilteredMarks.forEach(System.out::println);
+        Filter filter = (String mark) -> mark.hashCode() <= "C".hashCode();
+        Collect collect = (String mark, List<String> marksCollection) -> {
+            if (filter.filter(mark)) {
+                marksCollection.add(mark); 
+            }
+        };
+
+        List<String> declarativeFilteredMarks = new ArrayList<>();
+
+        for (String mark : marks) {
+            collect.collect(mark, declarativeFilteredMarks);
+        }
+
+        for (String mark : declarativeFilteredMarks) {
+            System.out.println(mark);
+        }
     }
 }
