@@ -16,7 +16,7 @@ public class ConsoleMenu {
     System.out.println("3. Delete contact");
     System.out.println("4. Find contact");
     System.out.println("5. Find all contacts");
-    System.out.println("6. Exit\n");
+    System.out.println("0. Exit\n");
   }
 
   public String readCommand() {

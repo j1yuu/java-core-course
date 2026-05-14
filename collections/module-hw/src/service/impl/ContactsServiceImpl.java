@@ -51,8 +51,8 @@ public class ContactsServiceImpl implements ContactsService {
 
   @Override
   public Optional<Contact> findByPhone(String phone) {
-    if (phone == null) {
-      return Optional.empty();
+    if (phone == null || phone.trim().isEmpty()) {
+      throw new IllegalArgumentException("Phone cannot be null or empty");
     }
   
     return contactsRepository.findByPhone(phone);
@@ -60,8 +60,8 @@ public class ContactsServiceImpl implements ContactsService {
 
   @Override
   public Iterable<Contact> findByName(String name) {
-    if (name == null) {
-      return contactsRepository.findAll();
+    if (name == null || name.trim().isEmpty()) {
+      throw new IllegalArgumentException("Name cannot be null or empty");
     }
   
     return contactsRepository.findByName(name);
@@ -69,8 +69,8 @@ public class ContactsServiceImpl implements ContactsService {
 
   @Override
   public Iterable<Contact> findByEmail(String email) {
-    if (email == null) {
-      return contactsRepository.findAll();
+    if (email == null || email.trim().isEmpty()) {
+      throw new IllegalArgumentException("Email cannot be null or empty");
     }
   
     return contactsRepository.findByEmail(email);
@@ -78,8 +78,8 @@ public class ContactsServiceImpl implements ContactsService {
 
   @Override
   public Iterable<Contact> findByGroup(String group) {
-    if (group == null) {
-      return contactsRepository.findAll();
+    if (group == null || group.trim().isEmpty()) {
+      throw new IllegalArgumentException("Group cannot be null or empty");
     }
 
     return contactsRepository.findByGroup(group);

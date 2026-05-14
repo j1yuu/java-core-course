@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Contact {
     private String name;
-    private String phone;
+    private final String phone;
     private String email;
     private String group;
 
@@ -72,11 +72,6 @@ public class Contact {
     public void setName(String name) {
         validateName(name);
         this.name = name;
-    }
-
-    public void setPhone(String phone) {
-        validatePhone(phone);
-        this.phone = phone;
     }
 
     public void setEmail(String email) {

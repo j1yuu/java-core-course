@@ -40,7 +40,7 @@ public class ConsoleApplication {
         case "3" -> deleteContact();
         case "4" -> findContact();
         case "5" -> findAllContacts();
-        case "6" -> running = false;
+        case "0" -> running = false;
         default -> System.out.println("Invalid option. Please try again.");
       }
     }

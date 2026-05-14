@@ -1,7 +1,6 @@
 import console.ConsoleApplication;
 import console.ConsoleInputReader;
 import console.ConsoleMenu;
-import java.util.Optional;
 import java.util.Scanner;
 import repository.ContactsRepository;
 import repository.impl.ContactsRepositoryImpl;
@@ -12,7 +11,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         
-        ContactsRepository contactsRepository = new ContactsRepositoryImpl(Optional.empty());
+        ContactsRepository contactsRepository = new ContactsRepositoryImpl();
         ContactsService contactsService = new ContactsServiceImpl(contactsRepository);
 
         ConsoleMenu consoleMenu = new ConsoleMenu(scanner);
