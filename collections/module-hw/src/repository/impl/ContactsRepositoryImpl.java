@@ -23,8 +23,8 @@ public class ContactsRepositoryImpl implements ContactsRepository {
   }
 
   public ContactsRepositoryImpl(List<Contact> contacts) {
-    this.contactsInOrder = List.copyOf(contacts);
-    this.uniqueContacts = new HashSet<>(List.copyOf(contacts));
+    this.contactsInOrder = new ArrayList<>(contacts);
+    this.uniqueContacts = new HashSet<>(contacts);
     this.contactsByGroup = prepareContactsByGroup(contacts);
   }
 
